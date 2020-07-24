@@ -1,7 +1,8 @@
 ----
 **Take Note!**
-- This version of the Hosts file generator, and tests, are for Python 3.5+ only.
-- With the exception of issues and PRs regarding changes to `hosts/data/StevenBlack/hosts`, all other issues regarding the content of the produced hosts files should be made with the appropriate data source that contributed the content in question. The contact information for all of the data sources can be found in the `hosts/data/` directory.
+
+* This version of the Hosts file generator, and tests, are for Python 3.5+ only.
+* With the exception of issues and PRs regarding changes to `hosts/data/StevenBlack/hosts`, all other issues regarding the content of the produced hosts files should be made with the appropriate data source that contributed the content in question. The contact information for all of the data sources can be found in the `hosts/data/` directory.
 ----
 
 ![Logo](https://raw.githubusercontent.com/StevenBlack/hosts/master/.github/logo.png)
@@ -10,7 +11,7 @@
 [![license](https://img.shields.io/github/license/StevenBlack/hosts.svg)](https://github.com/StevenBlack/hosts/blob/master/license.txt)
 [![repo size](https://img.shields.io/github/repo-size/StevenBlack/hosts.svg)](https://github.com/StevenBlack/hosts)
 [![contributors](https://img.shields.io/github/contributors/StevenBlack/hosts.svg)](https://github.com/StevenBlack/hosts/graphs/contributors)
-[![Build Status](https://img.shields.io/travis/StevenBlack/hosts/master.svg)](https://travis-ci.org/StevenBlack/hosts)
+[![Build Status](https://img.shields.io/github/workflow/status/StevenBlack/hosts/CI/master)](https://github.com/StevenBlack/hosts/actions?workflow=CI)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 [![commits since last release](https://img.shields.io/github/commits-since/StevenBlack/hosts/latest.svg)](https://github.com/StevenBlack/hosts/commits/master)
 [![last commit](https://img.shields.io/github/last-commit/StevenBlack/hosts.svg)](https://github.com/StevenBlack/hosts/commits/master)
@@ -131,6 +132,11 @@ in a subfolder.  If the subfolder does not exist, it will be created.
 section at the top, containing lines like `127.0.0.1 localhost`.  This is
 useful for configuring proximate DNS services on the local network.
 
+`--nogendata`, or `-g`: `false` (default) or `true`, skip the generation of the
+readmeData.json file used for generating readme.md files.  This is useful if you are
+generating host files with additional whitelists or blacklists and want to keep your
+local checkout of this repo unmodified.
+
 `--compress`, or `-c`: `false` (default) or `true`, *Compress* the hosts file
 ignoring non-necessary lines (empty lines and comments) and putting multiple
 domains in each line. Reducing the number of lines of the hosts file improves
@@ -140,6 +146,30 @@ the performances under Windows (with DNS Client service enabled).
 each domain on a separate line. This is necessary because many implementations
 of URL blockers that rely on `hosts` files do not conform to the standard which
 allows multiple hosts on a single line.
+
+`--blacklist <blacklistfile>`, or `-x <blacklistfile>`: Append the given blacklist file
+in hosts format to the generated hosts file.
+
+`--whitelist <whitelistfile>`, or `-w <whitelistfile>`: Use the given whitelist file
+to remove hosts from the generated hosts file.
+
+#### Using NixOS:
+
+To install hosts file on your machine add the following into your `configuration.nix`:
+
+```nix
+{
+  networking.extraHosts = let
+    hostsPath = https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts;
+    hostsFile = builtins.fetchurl hostsPath;
+  in builtins.readFile "${hostsFile}";
+}
+```
+
+* NOTE: Change `hostsPath` if you need other versions of hosts file.
+* NOTE: The call to `fetchurl` is impure.
+Use `fetchFromGitHub` with the exact commit if you want to always get the same result.
+
 
 ## How do I control which sources are unified?
 
@@ -187,8 +217,7 @@ If you discover sketchy domains you feel should be included here, here are some 
 
 The best way to get new domains included is to submit an issue to any of the data providers whose home pages are [listed here](https://github.com/StevenBlack/hosts#sources-of-hosts-data-unified-in-this-variant). This is best because once you submit new domains, they will be curated and updated by the dedicated folks who maintain these sources.
 
-
-### Option 2: add your domains to Steven Black's personal data file
+### Option 2: Fork this repository, add your domains to Steven Black's personal data file, and submit a pull request
 
 Fork this hosts this repo and add your links to [https://github.com/StevenBlack/hosts/blob/master/data/StevenBlack/hosts](https://github.com/StevenBlack/hosts/blob/master/data/StevenBlack/hosts).
 
@@ -302,9 +331,6 @@ Open a command prompt with administrator privileges and run this command:
 ipconfig /flushdns
 ```
 
-|If you want to use a huge hosts file by merging [hphosts](https://www.hosts-file.net/) (NOT INCLUDED HERE) you need to DISABLE and STOP `Dnscache` service before you replace hosts file in Windows Systems. You have been warned.|
-:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 Before flushing the DNS cache, open a command prompt with administrator privileges and run this command:
 
 ```bat
@@ -379,10 +405,6 @@ hosts source should be frequently updated by its maintainers with both
 additions and removals.  The larger the hosts file, the higher the level of
 curation is expected.
 
-For example, the (huge) hosts file from [hosts-file.net](https://hosts-file.net/)
-is **not** included here because it is very large (780,000+ entries)
-and doesn't currently display a correspondingly high level of curation activity.
-
 It is expected that this unified hosts file will serve both desktop and mobile
 devices under a variety of operating systems.
 
@@ -398,7 +420,7 @@ devices under a variety of operating systems.
 
 * [macOS Scripting for Configuration, Backup and Restore](https://github.com/tiiiecherle/osx_install_config) helps customizing, re-installing and using macOS. It also provides a [script](https://github.com/tiiiecherle/osx_install_config/blob/master/09_launchd/9b_run_on_boot/root/1_hosts_file/launchd_and_script/hosts_file_generator.sh) to install and update the hosts file using this project on macOS. In combination with a [launchd](https://github.com/tiiiecherle/osx_install_config/blob/master/09_launchd/9b_run_on_boot/root/1_hosts_file/launchd_and_script/com.hostsfile.install_update.plist) it updates the hosts file every x days (default is 4). To install both download the GitHub repo and run the [install script](https://github.com/tiiiecherle/osx_install_config/blob/master/09_launchd/9b_run_on_boot/root/1_hosts_file/install_hosts_file_generator_and_launchdservice.sh) from the directory one level up.
 
-* [Pi-hole](https://pi-hole.net/) is a network-wide DHCP server and ad blocker that runs on [Raspberry Pi](https://en.wikipedia.org/wiki/Raspberry_Pi). Pi-hole uses this repository as one of its sources.  This is a very interesting project to set up yourself, or you can [buy one pre-loaded](https://uk.pi-supply.com/products/pi-hole-kit-network-wide-ad-blocker).
+* [Pi-hole](https://pi-hole.net/) is a network-wide DHCP server and ad blocker that runs on [Raspberry Pi](https://en.wikipedia.org/wiki/Raspberry_Pi). Pi-hole uses this repository as one of its sources. This is a very interesting project to set up yourself, or you can [buy one pre-loaded](https://uk.pi-supply.com/products/pi-hole-poe-edition-the-network-wide-ad-blocker).
 
 * [Block ads and malware via local BIND9 DNS server](https://github.com/mueller-ma/block-ads-via-dns "Block ads and malware via local DNS server") (for Debian, Raspbian & Ubuntu): Set up a local DNS server with a `/etc/bind/named.conf.blocked` file, sourced from here.
 
