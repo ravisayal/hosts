@@ -1,0 +1,60 @@
+# blacklist
+#
+# The contents of this file (containing a listing of additional domains in
+# 'hosts' file format) are appended to the unified hosts file during the
+# update process. For example, uncomment the following line to block
+# 'example.com':
+
+# 0.0.0.0 example.com
+
+
+0.0.0.0    api.taboola.com
+0.0.0.0    beap.gemini.yahoo.com
+0.0.0.0    ping.chartbeat.net
+0.0.0.0    srtb.msn.com
+0.0.0.0    web.vortex.data.msn.com
+0.0.0.0    jsso.indiatimes.com
+0.0.0.0    geoapi.indiatimes.com
+0.0.0.0    googleads.g.doubleclick.net
+0.0.0.0    g.doubleclick.net
+0.0.0.0    doubleclick.net
+0.0.0.0    clbmtech.com
+0.0.0.0    ade.clbmtech.com
+0.0.0.0    ade.clmbtech.com
+0.0.0.0    static.clbmtech.com
+0.0.0.0    clbmtech.com
+0.0.0.0    c.amazon-adsystem.com
+0.0.0.0     static.clmbtech.com
+0.0.0.0     pixel.rubiconproject.com
+0.0.0.0     dotomi.com
+0.0.0.0     pubmatic.com
+0.0.0.0     pagead2.googlesyndication.com
+0.0.0.0     sb.scorecardresearch.com
+0.0.0.0     securepubads.g.doubleclick.net
+0.0.0.0     www.google-analytics.com
+0.0.0.0     tpc.googlesyndication.com
+0.0.0.0     googleads.g.doubleclick.net
+0.0.0.0     pagead2.googlesyndication.com
+0.0.0.0     ads.us.criteo.com
+0.0.0.0     cat.va.us.criteo.com
+0.0.0.0     pix.us.criteo.com
+0.0.0.0     static.criteo.net
+0.0.0.0     static.eu.criteo.net
+0.0.0.0     tpc.googlesyndication.com
+0.0.0.0     adservice.google.com
+0.0.0.0     c.betrad.com
+0.0.0.0     c.evidon.com
+0.0.0.0     geo.moatads.com
+0.0.0.0     googleads.g.doubleclick.net
+0.0.0.0     pagead2.googlesyndication.com
+0.0.0.0     px.moatads.com
+0.0.0.0     securepubads.g.doubleclick.net
+0.0.0.0     us-east-1.event.prod.bidr.io
+0.0.0.0     www.googletagservices.com
+0.0.0.0     pagead2.googlesyndication.com
+0.0.0.0     us-east-1.event.prod.bidr.io
+0.0.0.0     www.googletagservices.com
+0.0.0.0     match.prod.bidr.io
+0.0.0.0     rover.ebay.com
+0.0.0.0     adservice.google.com
+
